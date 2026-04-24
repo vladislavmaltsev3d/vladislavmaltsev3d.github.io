@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Light Master Pro - Test Button + Image</title>
+  <title>Light Master Pro - Test Button + Image + Compare Slider</title>
   <style>
     body {
       margin: 0;
@@ -174,6 +174,188 @@
       box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
     }
 
+    .compare-section {
+      position: relative;
+      z-index: 2;
+      margin-top: 46px;
+    }
+
+    .compare-title {
+      margin: 0 0 18px 0;
+      font-size: 32px;
+      letter-spacing: -1px;
+      font-weight: 700;
+    }
+
+    .compare-subtitle {
+      margin: 0 auto 24px;
+      max-width: 720px;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #666666;
+    }
+
+    .compare-shell {
+      position: relative;
+      width: min(760px, 92vw);
+      margin: 0 auto;
+      padding: 16px;
+      border-radius: 40px;
+      background: rgba(255, 255, 255, 0.30);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      box-shadow:
+        0 34px 80px rgba(0, 0, 0, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      overflow: hidden;
+    }
+
+    .compare-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 40px;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.55), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(90,200,250,0.16), transparent 30%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .compare-liquid {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      filter: blur(38px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .compare-liquid.one {
+      top: -50px;
+      left: -40px;
+      background: rgba(255,255,255,0.46);
+    }
+
+    .compare-liquid.two {
+      bottom: -60px;
+      right: -30px;
+      background: rgba(90,200,250,0.20);
+    }
+
+    .compare {
+      --pos: 50%;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 30px;
+      overflow: hidden;
+      cursor: ew-resize;
+      user-select: none;
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.18);
+      background: #dfe3ea;
+    }
+
+    .compare img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+
+    .compare-after {
+      clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+    }
+
+    .compare-divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--pos);
+      width: 2px;
+      transform: translateX(-1px);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.2),
+        0 0 20px rgba(255,255,255,0.65);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .compare-handle {
+      position: absolute;
+      top: 50%;
+      left: var(--pos);
+      transform: translate(-50%, -50%);
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.32);
+      border: 1px solid rgba(255,255,255,0.74);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow:
+        0 16px 34px rgba(0,0,0,0.18),
+        inset 0 1px 0 rgba(255,255,255,0.86);
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .compare-handle::before,
+    .compare-handle::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 12px;
+      height: 12px;
+      border-top: 2px solid #111111;
+      border-right: 2px solid #111111;
+      opacity: 0.82;
+    }
+
+    .compare-handle::before {
+      left: 20px;
+      transform: translateY(-50%) rotate(225deg);
+    }
+
+    .compare-handle::after {
+      right: 20px;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .compare-label {
+      position: absolute;
+      top: 18px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.30);
+      border: 1px solid rgba(255,255,255,0.70);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow:
+        0 12px 24px rgba(0,0,0,0.10),
+        inset 0 1px 0 rgba(255,255,255,0.78);
+      font-size: 14px;
+      font-weight: 600;
+      color: #111111;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .compare-label.before {
+      left: 18px;
+    }
+
+    .compare-label.after {
+      right: 18px;
+    }
+
     .glow {
       width: 180px;
       height: 60px;
@@ -203,6 +385,30 @@
         transform: translateY(-10px) scale(1.05);
       }
     }
+
+    @media (max-width: 700px) {
+      h1 {
+        font-size: 46px;
+      }
+
+      p {
+        font-size: 18px;
+      }
+
+      .compare-title {
+        font-size: 26px;
+      }
+
+      .compare-handle {
+        width: 60px;
+        height: 60px;
+      }
+
+      .compare-label {
+        font-size: 13px;
+        padding: 8px 13px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -210,7 +416,7 @@
     <div class="card">
       <h1>Light Master Pro</h1>
       <p>
-        Apple-style GitHub Pages test with shadows, soft glass effect, hover button, and image card.
+        Apple-style GitHub Pages test with shadows, soft glass effect, hover button, image card, and before / after slider.
       </p>
 
       <a href="#" class="test-button">Test Button</a>
@@ -223,8 +429,75 @@
         </div>
       </div>
 
+      <div class="compare-section">
+        <h2 class="compare-title">Before / After Slider</h2>
+        <p class="compare-subtitle">
+          Drag the handle to compare the two images inside the same liquid glass Apple-style frame.
+        </p>
+
+        <div class="compare-shell">
+          <div class="compare-liquid one"></div>
+          <div class="compare-liquid two"></div>
+
+          <div class="compare" id="compareSlider">
+            <img
+              src="Soft%20lavender%20sphere%20with%20golden%20glow.png"
+              alt="Before Image"
+              class="compare-before"
+            />
+
+            <img
+              src="Soft%20light%20spill%20on%20dark%20background.png"
+              alt="After Image"
+              class="compare-after"
+            />
+
+            <div class="compare-divider"></div>
+            <div class="compare-handle"></div>
+
+            <div class="compare-label before">Before</div>
+            <div class="compare-label after">After</div>
+          </div>
+        </div>
+      </div>
+
       <div class="glow"></div>
     </div>
   </div>
+
+  <script>
+    const compare = document.getElementById("compareSlider");
+    let isDragging = false;
+
+    function setComparePosition(clientX) {
+      const rect = compare.getBoundingClientRect();
+      let pos = ((clientX - rect.left) / rect.width) * 100;
+      pos = Math.max(0, Math.min(100, pos));
+      compare.style.setProperty("--pos", pos + "%");
+    }
+
+    compare.addEventListener("pointerdown", (e) => {
+      isDragging = true;
+      compare.setPointerCapture(e.pointerId);
+      setComparePosition(e.clientX);
+    });
+
+    compare.addEventListener("pointermove", (e) => {
+      if (!isDragging) return;
+      setComparePosition(e.clientX);
+    });
+
+    compare.addEventListener("pointerup", () => {
+      isDragging = false;
+    });
+
+    compare.addEventListener("pointercancel", () => {
+      isDragging = false;
+    });
+
+    compare.addEventListener("click", (e) => {
+      setComparePosition(e.clientX);
+    });
+  </script>
 </body>
 </html>
